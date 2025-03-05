@@ -1,5 +1,5 @@
 export async function navQuery() {
-  const response = await fetch(import.meta.env.WORDPRESS_API_URL, {
+  const response = await fetch(import.meta.env.PUBLIC_WORDPRESS_API_URL, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -27,7 +27,7 @@ export async function navQuery() {
 }
 
 export async function getNodeByURI(uri) {
-  const response = await fetch(import.meta.env.WORDPRESS_API_URL, {
+  const response = await fetch(import.meta.env.PUBLIC_WORDPRESS_API_URL, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -133,7 +133,7 @@ export async function getAllUris() {
   let hasNextPage = true;
 
   while (hasNextPage) {
-    const response = await fetch(import.meta.env.WORDPRESS_API_URL, {
+    const response = await fetch(import.meta.env.PUBLIC_WORDPRESS_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -186,7 +186,7 @@ export async function getAllUris() {
 
 
 export async function findLatestPostsAPI() {
-  const response = await fetch(import.meta.env.WORDPRESS_API_URL, {
+  const response = await fetch(import.meta.env.PUBLIC_WORDPRESS_API_URL, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -231,7 +231,7 @@ export async function newsPagePostsQuery() {
   let hasNextPage = true;
 
   while (hasNextPage) {
-    const response = await fetch(import.meta.env.WORDPRESS_API_URL, {
+    const response = await fetch(import.meta.env.PUBLIC_WORDPRESS_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -290,37 +290,50 @@ export async function newsPagePostsQuery() {
 }
 
 export async function getAllMembers() {
-  const response = await fetch(import.meta.env.WORDPRESS_API_URL, {
-    method: 'post',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: `{
-        equipes (where: {status: PUBLISH}, first: 100) {
-                nodes {
-                      featuredImage {
-                            node {
-                              altText
-                              mediaItemUrl
-                      }
-                      }
-                      title
-                      fonctions {
-                        equipe
-                        fonction
-                      }
-                      social {
-                        facebook
-                        instagram
-                        linkedin
-                        twitter
-                      }
-                  }
-        }
-        }     
-      `
-
-    })
-  });
-  const { data } = await response.json();
-  return data.equipes.nodes;
+  try {
+    const response = await fetch(import.meta.env.PUBLIC_WORDPRESS_API_URL, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `{
+          equipes (where: {status: PUBLISH}, first: 100) {
+                  nodes {
+                        featuredImage {
+                              node {
+                                altText
+                                mediaItemUrl
+                        }
+                        }
+                        title
+                        fonctions {
+                          equipe
+                          fonction
+                        }
+                        social {
+                          facebook
+                          instagram
+                          linkedin
+                          twitter
+                        }
+                    }
+          }
+          }     
+        `
+      })
+    });
+    
+    const { data } = await response.json();
+    
+    // Check if data.equipes exists and has nodes
+    if (data && data.equipes && data.equipes.nodes) {
+      return data.equipes.nodes;
+    } else {
+      console.error('No equipes data found in API response');
+      // Return an empty array as fallback
+      return [];
+    }
+  } catch (error) {
+    console.error('Error fetching team members:', error);
+    return [];
+  }
 }

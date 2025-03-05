@@ -10,34 +10,30 @@ const metadata = {
   title: 'Equipe',
 };
 const members = await getAllMembers();
-
 ---
-
-
 
 <Layout metadata={metadata}>
   <div>
-  <Headline
-      subtitle="L'équipe Citizen Lab Bénin est composée de jeunes engagés avec des profils divers et complémentaires. Ce sont des acteurs de changement conscients de leur leadership et de leur volonté d’impacter"
+    <Headline
+      subtitle="L'équipe Citizen Lab Bénin est composée de jeunes engagés avec des profils divers et complémentaires. Ce sont des acteurs de changement conscients de leur leadership et de leur volonté d'impacter"
       title="Membres de l'équipe"
     >
     </Headline>
 
-  <!-- Membres ****************** -->
+    <!-- Membres ****************** -->
 
-  <Membres team={members}/>
+    <Membres team={members}/>
 
+    <!-- Stats Widget ****************** -->
 
-  <!-- Stats Widget ****************** -->
-
-  <Stats
-    stats={[
-      { title: 'Offres de formations', amount: '50' },
-      { title: 'Jeunes outillés', amount: '+150' },
-      { title: 'Contenus de Valeurs', amount: '+130' },
-      { title: "Nouvelles consciences citoyennes", amount: '+10M' },
-    ]}
-  />
-
+    <Stats
+      stats={[
+        { title: 'Offres de formations', amount: '50' },
+        { title: 'Jeunes outillés', amount: '+150' },
+        { title: 'Contenus de Valeurs', amount: '+130' },
+        { title: "Nouvelles consciences citoyennes", amount: '+10M' },
+      ]}
+    />
+  </div>
 
 </Layout>

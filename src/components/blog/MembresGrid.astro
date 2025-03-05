@@ -1,12 +1,31 @@
 ---
-
-import type { TeamMember } from '~/types';
 import Image from '~/components/common/Image.astro';
 import { findImage } from '~/utils/images';
 import { Icon } from 'astro-icon/components';
 
+// Custom type for WordPress team members
+interface WordPressTeamMember {
+  title: string;
+  featuredImage?: {
+    node?: {
+      mediaItemUrl?: string;
+      altText?: string;
+    };
+  };
+  social: {
+    facebook?: string;
+    instagram?: string;
+    linkedin?: string;
+    twitter?: string;
+  };
+  fonctions?: {
+    equipe?: string;
+    fonction?: string;
+  };
+}
+
 export interface Props {
-  member: TeamMember;
+  member: WordPressTeamMember;
 }
 
 const { member } = Astro.props;
@@ -61,7 +80,6 @@ const image = await findImage(member.featuredImage?.node?.mediaItemUrl);
             {member.social.twitter && (
               <a href={member.social.twitter} target="_blank" rel="noopener noreferrer">
                 <Icon
-                      
                       name="tabler:brand-x"
                       class="w-6 h-6 text-gray-400 dark:text-slate-500 hover:text-black dark:hover:text-slate-300"
                 />

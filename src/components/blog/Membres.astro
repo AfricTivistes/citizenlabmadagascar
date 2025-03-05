@@ -1,9 +1,29 @@
 ---
 import Membre from './MembresGrid.astro';
-import type { Team } from '~/types';
+
+// Import the WordPressTeamMember interface from MembresGrid.astro
+interface WordPressTeamMember {
+  title: string;
+  featuredImage?: {
+    node?: {
+      mediaItemUrl?: string;
+      altText?: string;
+    };
+  };
+  social: {
+    facebook?: string;
+    instagram?: string;
+    linkedin?: string;
+    twitter?: string;
+  };
+  fonctions?: {
+    equipe?: string;
+    fonction?: string;
+  };
+}
 
 export interface Props {
-  team: Array<Team>;
+  team: Array<WordPressTeamMember>;
 }
 
 const { team } = Astro.props;
