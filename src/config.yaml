@@ -1,6 +1,6 @@
 site:
-  name: AfricTivistes CitizenLab Benin
-  site: 'https://citizenlabbenin.org'
+  name: AfricTivistes CitizenLab Madagascar
+  site: 'https://citizenlabmadagascar.org'
   base: '/'
   trailingSlash: false
 
@@ -9,14 +9,14 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: Africtivistes CitizenLab Benin
+    default: Africtivistes CitizenLab Madagascar
     template: '%s — AfricTivistes'
-  description: "AfricTivistes CitizenLab Benin 🇧🇯 est une fabrique citoyenne dont le but est d’appuyer, d’accompagner et d’outiller les acteurs de la société civile béninoise par la formation, le développement d’outils et l’accompagnement à l’innovation et à la co-création."
+  description: "AfricTivistes CitizenLab Madagascar 🇲🇬 est une fabrique citoyenne dont le but est d’appuyer, d’accompagner et d’outiller les acteurs de la société civile béninoise par la formation, le développement d’outils et l’accompagnement à l’innovation et à la co-création."
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: Africtivistes CitizenLab Benin
+    site_name: Africtivistes CitizenLab Madagascar
     images:
       - url: '~/assets/images/default.png'
         width: 1200

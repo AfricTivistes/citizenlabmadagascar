@@ -76,9 +76,9 @@ export const footerData = {
     {
       title: "Nous Contacter",
       links:[
-        { text: "citizenlabbenin@africtivistes.org", href:'mailto:citizenlabbenin@africtivistes.org ' },
+        { text: "citizenlabmadagascar@africtivistes.org", href:'mailto:citizenlabmadagascar@africtivistes.org ' },
         { text: "+229 97 39 99 95", href: 'tel:+22997399995'},
-        {text: "Cotonou, Benin", href: '#'}
+        {text: "Cotonou, Madagascar", href: '#'}
       ]
     }
   ],
@@ -87,11 +87,11 @@ export const footerData = {
     //{ text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
   socialLinks: [
-    { icon: 'tabler:brand-x', href: 'https://twitter.com/BeninCitizenlab' },
-    { icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/citizenlabbenin/' },
+    { icon: 'tabler:brand-x', href: 'https://twitter.com/MadagascarCitizenlab' },
+    { icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/citizenlabmadagascar/' },
     { icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/profile.php?id=61553614994311' },
-    { icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/company/citizen-lab-benin/about/' },
-    { icon: 'tabler:brand-github', href: 'https://github.com/AfricTivistes/citizenlabbenin' },
+    { icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/company/citizen-lab-madagascar/about/' },
+    { icon: 'tabler:brand-github', href: 'https://github.com/AfricTivistes/citizenlabmadagascar' },
   ],
   footNote: `
   <a href="https://www.africtivistes.com" target= '_blank'>
