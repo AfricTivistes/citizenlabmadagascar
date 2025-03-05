@@ -1,6 +1,6 @@
 site:
   name: AfricTivistes CitizenLab Madagascar
-  site: 'https://citizenlabmadagascar.org'
+  site: 'https://citizenlabmadagascar.netlify.app'
   base: '/'
   trailingSlash: false
 
