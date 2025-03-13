@@ -77,8 +77,8 @@ export const footerData = {
       title: "Nous Contacter",
       links:[
         { text: "citizenlabmadagascar@africtivistes.org", href:'mailto:citizenlabmadagascar@africtivistes.org ' },
-        { text: "+229 97 39 99 95", href: 'tel:+22997399995'},
-        {text: "Cotonou, Madagascar", href: '#'}
+        { text: "+261 37 646 16 64", href: 'tel:+261376461664'},
+        {text: " Lot IVP 7 Bis Ankadifotsy Befelatanana, Antananarivo, 101 Madagascar ", href: '#'}
       ]
     }
   ],
