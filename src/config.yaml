@@ -11,7 +11,7 @@ metadata:
   title:
     default: Africtivistes CitizenLab Madagascar
     template: '%s — AfricTivistes'
-  description: "AfricTivistes CitizenLab Madagascar 🇲🇬 est une fabrique citoyenne dont le but est d’appuyer, d’accompagner et d’outiller les acteurs de la société civile béninoise par la formation, le développement d’outils et l’accompagnement à l’innovation et à la co-création."
+  description: "AfricTivistes CitizenLab Madagascar 🇲🇬 est une fabrique citoyenne dont le but est d’appuyer, d’accompagner et d’outiller les acteurs de la société civile malgache par la formation, le développement d’outils et l’accompagnement à l’innovation et à la co-création."
   robots:
     index: true
     follow: true
