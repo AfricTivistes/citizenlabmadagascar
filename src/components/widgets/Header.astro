@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components";
 import Logo from "~/components/Logo.astro";
 // import ToggleTheme from "~/components/common/ToggleTheme.astro";
-// import ToggleMenu from "~/components/common/ToggleMenu.astro";
+import ToggleMenu from "~/components/common/ToggleMenu.astro";
 import Button from "~/components/ui/Button.astro"
 
 import { getHomePermalink } from "~/utils/permalinks";
@@ -70,9 +70,9 @@ const data = await navQuery()
       <a class="flex items-center" href={getHomePermalink()}>
         <Logo />
       </a>
-      <!-- <div class="flex items-center md:hidden">
+      <div class="flex items-center md:hidden">
         <ToggleMenu />
-      </div> -->
+      </div>
     </div>
     <nav
       class="items-center w-full md:w-auto hidden md:flex text-default overflow-y-auto overflow-x-hidden md:overflow-y-visible md:overflow-x-auto md:mx-5"
