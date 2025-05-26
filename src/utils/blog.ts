@@ -6,6 +6,37 @@ import { cleanSlug, trimSlash, BLOG_BASE, POST_PERMALINK_PATTERN, CATEGORY_BASE,
 import { newsPagePostsQuery, findLatestPostsAPI } from "~/utils/api";
 import slugify from 'slugify';
 
+interface PaginateOptions {
+  params: Record<string, string | undefined>;
+  pageSize: number;
+  props?: Record<string, unknown>;
+}
+
+interface PaginateFunction {
+  (items: unknown[], options: PaginateOptions): Array<{ params: Record<string, string>; props: Record<string, unknown> }>;
+}
+
+interface PaginateContext {
+  paginate: PaginateFunction;
+}
+
+interface CategoryNode {
+  name: string;
+}
+
+interface TermNode {
+  name: string;
+}
+
+interface PostWithCategories {
+  categories?: {
+    nodes: CategoryNode[];
+  };
+  terms?: {
+    nodes: TermNode[];
+  };
+}
+
 const generatePermalink = async ({
   id,
   slug,
@@ -58,7 +89,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     metadata = {},
   } = data;
 
-  const slug = cleanSlug(rawSlug); // cleanSlug(rawSlug.split('/').pop());
+  const slug = cleanSlug(rawSlug);
   const publishDate = new Date(rawPublishDate);
   const updateDate = rawUpdateDate ? new Date(rawUpdateDate) : undefined;
   const category = rawCategory ? cleanSlug(rawCategory) : undefined;
@@ -68,25 +99,18 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     id: id,
     slug: slug,
     permalink: await generatePermalink({ id, slug, publishDate, category }),
-
     publishDate: publishDate,
     updateDate: updateDate,
-
+    date: publishDate.toISOString(),
     title: title,
     excerpt: excerpt,
     image: image,
-
     category: category,
     tags: tags,
     author: author,
-
     draft: draft,
-
     metadata,
-
     Content: Content,
-    // or 'content' in case you consume from API
-
     readingTime: remarkPluginFrontmatter?.readingTime,
   };
 };
@@ -165,10 +189,9 @@ export const findLatestPosts = async ({ count }: { count?: number }): Promise<Ar
 
 /** */
 
-export const getStaticPathsBlogList = async ({ paginate }) => {
+export const getStaticPathsBlogList = async ({ paginate }: PaginateContext) => {
   if (!isBlogEnabled || !isBlogListRouteEnabled) return [];
 
-  // Récupération de tous les articles avec pagination
   const allPosts = await newsPagePostsQuery();
 
   return paginate(allPosts, {
@@ -189,16 +212,17 @@ export const getStaticPathsBlogPost = async () => {
 };
 
 /** */
-export const getStaticPathsBlogCategory = async ({ paginate }) => {
+export const getStaticPathsBlogCategory = async ({ paginate }: PaginateContext) => {
   if (!isBlogEnabled || !isBlogCategoryRouteEnabled) return [];
 
-  const posts = await newsPagePostsQuery();
-  const categories = new Set();
+  const posts = await newsPagePostsQuery() as PostWithCategories[];
+  const categories = new Set<string>();
 
   posts.forEach((post) => {
-    if (post.categories && post.categories.nodes && post.categories.nodes.length > 0) {
-      post.categories.nodes.forEach((category) => {
-        if (category.name && typeof category.name === 'string') {
+    const categoryNodes = post.categories?.nodes;
+    if (categoryNodes && categoryNodes.length > 0) {
+      categoryNodes.forEach((category: CategoryNode) => {
+        if (category.name) {
           const normalizedCategory = slugify(category.name, { lower: true });
           categories.add(normalizedCategory);
         }
@@ -206,16 +230,14 @@ export const getStaticPathsBlogCategory = async ({ paginate }) => {
     }
   });
 
-
   const paths = Array.from(categories).flatMap((category) =>
     paginate(
-      posts.filter((post) =>
-        post.categories &&
-        post.categories.nodes &&
-        post.categories.nodes.some((cat) =>
-          cat.name && typeof cat.name === 'string' && category === slugify(cat.name, { lower: true })
-        )
-      ),
+      posts.filter((post) => {
+        const categoryNodes = post.categories?.nodes;
+        return categoryNodes && categoryNodes.some((cat: CategoryNode) =>
+          cat.name && category === slugify(cat.name, { lower: true })
+        );
+      }),
       {
         params: { category: category, blog: CATEGORY_BASE || undefined },
         pageSize: blogPostsPerPage,
@@ -228,16 +250,17 @@ export const getStaticPathsBlogCategory = async ({ paginate }) => {
 };
 
 /** */
-export const getStaticPathsBlogTag = async ({ paginate }) => {
+export const getStaticPathsBlogTag = async ({ paginate }: PaginateContext) => {
   if (!isBlogEnabled || !isBlogTagRouteEnabled) return [];
 
-  const posts = await newsPagePostsQuery();
-  const tags = new Set();
+  const posts = await newsPagePostsQuery() as PostWithCategories[];
+  const tags = new Set<string>();
 
   posts.forEach((post) => {
-    if (post.terms && post.terms.nodes && post.terms.nodes.length > 0) {
-      post.terms.nodes.forEach((term) => {
-        if (term.name && typeof term.name === 'string') {
+    const termNodes = post.terms?.nodes;
+    if (termNodes && termNodes.length > 0) {
+      termNodes.forEach((term: TermNode) => {
+        if (term.name) {
           const normalizedTag = slugify(term.name, { lower: true });
           tags.add(encodeURIComponent(normalizedTag));
         }
@@ -247,17 +270,16 @@ export const getStaticPathsBlogTag = async ({ paginate }) => {
 
   const paths = Array.from(tags).flatMap((tag) =>
     paginate(
-      posts.filter((post) =>
-        post.terms &&
-        post.terms.nodes &&
-        post.terms.nodes.some((term) =>
-          term.name && typeof term.name === 'string' && slugify(term.name, { lower: true }) === tag
-        )
-      ),
+      posts.filter((post) => {
+        const termNodes = post.terms?.nodes;
+        return termNodes && termNodes.some((term: TermNode) =>
+          term.name && tag === encodeURIComponent(slugify(term.name, { lower: true }))
+        );
+      }),
       {
         params: { tag: tag, blog: TAG_BASE || undefined },
         pageSize: blogPostsPerPage,
-        props: { tag: tag },
+        props: { tag },
       }
     )
   );

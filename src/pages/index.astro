@@ -11,7 +11,7 @@ import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 
 const metadata = {
-  title: 'Africtivistes CitizenLab Madagascar 🇲🇬 — Votre plateforme d’informations citoyenne',
+  title: "Africtivistes CitizenLab Madagascar 🇲🇬 — Votre plateforme d'informations citoyenne",
   ignoreTitleTemplate: true,
 };
 ---
@@ -23,16 +23,21 @@ const metadata = {
     actions={[
       { text: 'En savoir plus',
         href: '#features',
-        variant: 'primary' },
+        variant: 'primary',
+        class: 'text-lg font-semibold px-8 py-3' },
     ]}
   >
     <Fragment slot="title">
-      Votre plateforme d’informations
-      <span class="text-accent dark:text-accent highlight"> citoyennes</span>
-      à <span class="text-primary dark:text-primary highlight" >Madagascar </span> 
+      <span class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+        Votre plateforme d&apos;informations
+        <span class="text-accent dark:text-accent highlight"> citoyennes</span>
+        à <span class="text-primary dark:text-primary highlight">Madagascar</span>
+      </span>
     </Fragment>
     <Fragment slot="subtitle">
-      Promouvoir la participation citoyenne et la démocratie participative par l’utilisation de la technologie civique (civic tech)
+      <p class="text-xl md:text-2xl text-muted dark:text-slate-300 leading-relaxed max-w-3xl mx-auto">
+        Promouvoir la participation citoyenne et la démocratie participative par l&apos;utilisation de la technologie civique (civic tech)
+      </p>
     </Fragment>
   </Hero>
   
@@ -40,8 +45,21 @@ const metadata = {
 
   <BlogLatestPosts
     title="Découvrez les dernières actualités!"
-    information={`Vitrine de l'actualité et des activités autour de la participation citoyenne à Madagascar.
-                `}
+    information={`Vitrine de l'actualité et des activités autour de la participation citoyenne à Madagascar.`}
+    classes={{
+      container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800',
+      title: 'text-4xl md:text-5xl font-bold text-center mb-6 text-gray-900 dark:text-white tracking-tight',
+      information: 'text-xl text-center text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-16 leading-relaxed',
+      grid: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8',
+      card: 'bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden',
+      cardImage: 'w-full h-48 object-cover rounded-t-xl',
+      cardContent: 'p-6',
+      cardTitle: 'text-xl font-semibold text-gray-900 dark:text-white mb-3 hover:text-primary dark:hover:text-primary transition-colors duration-200',
+      cardDescription: 'text-gray-600 dark:text-gray-300 text-base leading-relaxed mb-4',
+      cardDate: 'text-sm text-gray-500 dark:text-gray-400 mb-4',
+      cardLink: 'inline-flex items-center text-primary hover:text-primary-dark dark:text-primary-light dark:hover:text-primary transition-colors duration-200 font-medium',
+      cardIcon: 'ml-2 w-4 h-4'
+    }}
   />
 
   <!-- Features Widget *************** -->
@@ -53,39 +71,39 @@ const metadata = {
     subtitle="Ensemble pour une démocratie participative"
     items={[
       {
-        title: 'Accès à l’information',
+        title: "Accès à l'information",
         description:
           "CitizenLab Madagascar à travers une mobilisation sur Internet, produit des contenus de valeurs pour impulser une nouvelle prise de conscience citoyenne au Madagascar et fait la promotion de l'accès à l'information.",
         icon: 'tabler:components',
       },
       {
-        title: 'Promouvoir la participation citoyenne',
+        title: "Promouvoir la participation citoyenne",
         description:
-          "Nous oeuvrons pour plus d’implication citoyenne dans les organes de prise de décision publiques et dans l’élaboration des politiques publiques en conformité avec la charte africaine de la jeunesse et d’autres textes régionaux et continentaux. ",
+          "Nous oeuvrons pour plus d'implication citoyenne dans les organes de prise de décision publiques et dans l'élaboration des politiques publiques en conformité avec la charte africaine de la jeunesse et d'autres textes régionaux et continentaux.",
         icon: 'tabler:components',
       },
       {
-        title: 'Education et participation citoyenne',
+        title: "Education et participation citoyenne",
         description:
-          "Nous devons outiller les jeunes à travers les actions de formations, de sensibilisation et des campagnes d’actions pour impulser une forte participation citoyenne.",
+          "Nous devons outiller les jeunes à travers les actions de formations, de sensibilisation et des campagnes d'actions pour impulser une forte participation citoyenne.",
         icon: 'tabler:transform',
       },
       {
-        title: 'Réseau d’acteurs engagés',
+        title: "Réseau d'acteurs engagés",
         description:
-          "En se fondant sur l’intelligence collective, nous envisageons de créer une communauté de jeunes qui partagent des idéologies et des valeurs profondes pour construire un Madagascar où la démocratie participative et la Gouvernance ouverte sont des réalités.",
+          "En se fondant sur l'intelligence collective, nous envisageons de créer une communauté de jeunes qui partagent des idéologies et des valeurs profondes pour construire un Madagascar où la démocratie participative et la Gouvernance ouverte sont des réalités.",
         icon: 'tabler:link',
       },
       {
-        title: 'Plaidoyer pour une démocratie inclusive et plus adaptée',
+        title: "Plaidoyer pour une démocratie inclusive et plus adaptée",
         description:
-          "La charte africaine, de la démocratie, des élections et de la gouvernance (CADEG) et le Menu des Engagements Possibles sont des instruments continentaux et internationaux pour consolider la démocratie. Leur adoption et leur domestication nécessitent des campagnes de plaidoyer pour une Nouvelle prise de conscience afin de renforcer les institutions publiques.",
+          "La charte africaine, de la démocratie, des élections et de la gouvernance (CADEG) et le Menu des Engagements Possibles sont des instruments continentaux et internationaux pour consolider la démocratie. Leur adoption et leur domestication nécessitent des campagnes de plaidoyer pour une Nouvelle prise de conscience afin de renforcer les institutions publiques.",
         icon: 'tabler:rocket',
       },
       {
-        title: 'Des campagnes de sensibilisation en ligne',
+        title: "Des campagnes de sensibilisation en ligne",
         description:
-          "Nous déployons des campagnes de plaidoyer en ligne pour promouvoir la participation citoyenne et impulser une nouvelle dynamique de participation citoyenne pour avoir un Madagascar démocratique et bien gouverné. ",
+          "Nous déployons des campagnes de plaidoyer en ligne pour promouvoir la participation citoyenne et impulser une nouvelle dynamique de participation citoyenne pour avoir un Madagascar démocratique et bien gouverné.",
         icon: 'tabler:network',
       },
     ]}
@@ -191,12 +209,22 @@ const metadata = {
     title="Foire aux questions"
     subtitle="Le FAQ sur le projet AfricTivistes CitizenLab Madagascar répond à des questions sur les objectifs, les activités, le public cible, le rôle des citoyens et le financement du projet"
     tagline="FAQs"
-    classes={{ container: 'max-w-6xl' }}
+    classes={{
+      container: 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16',
+      title: 'text-3xl md:text-4xl font-bold text-center mb-4 text-gray-900 dark:text-white',
+      subtitle: 'text-lg text-center text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-12',
+      items: {
+        container: 'space-y-8',
+        panel: 'bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6',
+        title: 'text-xl font-semibold text-gray-900 dark:text-white mb-4',
+        description: 'text-gray-600 dark:text-gray-300 leading-relaxed'
+      }
+    }}
     items={[
       {
         title: "Qu'est-ce que le projet AfricTivistes CitizenLab Madagascar ?",
         description:
-          "AfricTivistes CitizenLab Madagascar est une fabrique citoyenne qui a pour objectif <b>d’appuyer, d’accompagner et d’outiller</b> les acteurs de la société civile du Madagascar par la formation, le développement d’outils innovants. ",
+          "AfricTivistes CitizenLab Madagascar est une fabrique citoyenne qui a pour objectif <b>d'appuyer, d'accompagner et d'outiller</b> les acteurs de la société civile du Madagascar par la formation, le développement d'outils innovants.",
       },
       {
         title: "Qu'est-ce que la Civic Tech ?",
@@ -206,7 +234,7 @@ const metadata = {
       {
         title: "Pourquoi AfricTivistes CitizenLab Madagascar encourage la participation citoyenne à Madagascar ?",
         description:
-          "AfricTivistes CitizenLab est une initiative de Promotion de la Participation Citoyenne  et de  de l’engagement civique et politique des jeunes du Madagascar est une réponse à une demande des jeunes et des organisations de la société civile.",
+          "AfricTivistes CitizenLab est une initiative de Promotion de la Participation Citoyenne et de l'engagement civique et politique des jeunes du Madagascar est une réponse à une demande des jeunes et des organisations de la société civile.",
       },
       {
         title: "Comment les Civic Tech ont-elles permis des mobilisations importantes en Afrique ?",
@@ -228,13 +256,23 @@ const metadata = {
 
   <!-- Stats Widget ****************** -->
 
-<Stats
+  <Stats
     stats={[
       { title: 'Offres de formations', amount: '50' },
       { title: 'Jeunes outillés', amount: '+150' },
       { title: 'Contenus de Valeurs', amount: '+130' },
       { title: "Nouvelles consciences citoyennes", amount: '+10M' },
     ]}
+    classes={{
+      container: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-50 dark:bg-slate-800',
+      title: 'text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white',
+      items: {
+        container: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8',
+        panel: 'text-center p-6 bg-white dark:bg-slate-700 rounded-lg shadow-lg',
+        amount: 'text-4xl md:text-5xl font-bold text-primary dark:text-white mb-2',
+        title: 'text-lg text-gray-600 dark:text-gray-300'
+      }
+    }}
   />
 
 

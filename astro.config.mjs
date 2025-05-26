@@ -35,26 +35,15 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
+    }),
     mdx(),
     icon({
       include: {
         tabler: ['*'],
-        'flat-color-icons': [
-          'template',
-          'gallery',
-          'approval',
-          'document',
-          'advertising',
-          'currency-exchange',
-          'voice-presentation',
-          'business-contact',
-          'database',
-          'todo-list',
-          'page-template',
-
-
-        ],
       },
     }),
 
@@ -70,8 +59,17 @@ export default defineConfig({
       CSS: true,
       HTML: {
         removeAttributeQuotes: false,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
       },
-      Image: false,
+      Image: {
+        quality: 80,
+        webp: true,
+        avif: true,
+      },
       JavaScript: true,
       SVG: true,
       Logger: 1,
@@ -80,12 +78,27 @@ export default defineConfig({
 
   markdown: {
     remarkPlugins: [readingTimeRemarkPlugin],
+    shikiConfig: {
+      theme: 'github-dark',
+      wrap: true,
+    },
   },
 
   vite: {
     resolve: {
       alias: {
         '~': path.resolve(__dirname, './src'),
+      },
+    },
+    build: {
+      cssMinify: true,
+      minify: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor': ['astro', '@astrojs/tailwind'],
+          },
+        },
       },
     },
   },

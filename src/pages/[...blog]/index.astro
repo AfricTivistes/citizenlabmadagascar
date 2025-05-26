@@ -18,7 +18,10 @@ export async function getStaticPaths () {
 const { post } = Astro.props;
 
 const url = getCanonical(getPermalink(post.permalink, 'post'));
-const image = (await findImage(post.image)) as ImageMetadata | undefined;
+let image: ImageMetadata | undefined = undefined;
+if (post.image) {
+  image = await findImage(post.image);
+}
 
 const metadata = merge(
   {
@@ -38,6 +41,6 @@ const metadata = merge(
 ---
 
 <Layout metadata={metadata}>
-  <SinglePost post={{ ...post, image: image }} url={url} />
+  <SinglePost post={{ ...post, image }} url={url} />
   <ToBlogLink />
 </Layout>

@@ -49,8 +49,8 @@ const seoProps: AstroSeoProps = merge(
     noindex: typeof METADATA?.robots?.index !== 'undefined' ? !METADATA.robots.index : undefined,
     nofollow: typeof METADATA?.robots?.follow !== 'undefined' ? !METADATA.robots.follow : undefined,
     description: METADATA?.description,
-    openGraph: METADATA?.openGraph,
-    twitter: METADATA?.twitter,
+    openGraph: METADATA?.openGraph || {},
+    twitter: METADATA?.twitter || {},
   },
   {
     title: title,
@@ -59,8 +59,8 @@ const seoProps: AstroSeoProps = merge(
     noindex: typeof robots?.index !== 'undefined' ? !robots.index : undefined,
     nofollow: typeof robots?.follow !== 'undefined' ? !robots.follow : undefined,
     description: description,
-    openGraph: { url: canonical, ...openGraph },
-    twitter: twitter,
+    openGraph: { url: canonical, ...(openGraph || {}) },
+    twitter: twitter || {},
   }
 );
 ---

@@ -187,13 +187,14 @@ const getAnalytics = () => {
   const _default = {
     vendors: {
       googleAnalytics: {
-        id: 'G-TT2H971V99',
+        id: undefined,
         partytown: true,
       },
     },
   };
 
-  return merge({}, _default, config?.analytics ?? {}) as AnalyticsConfig;
+  const configAnalytics = config?.analytics ?? {};
+  return merge({}, _default, configAnalytics) as AnalyticsConfig;
 };
 
 export const SITE = getSite();

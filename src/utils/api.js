@@ -1,10 +1,11 @@
 export async function navQuery() {
+  console.log('Fetching menu from:', import.meta.env.PUBLIC_WORDPRESS_API_URL);
   const response = await fetch(import.meta.env.PUBLIC_WORDPRESS_API_URL, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       query: `{
-              menuItems(where: {location: GATSBY_HEADER_MENU}) {
+              menuItems(where: {location: HEADER_MENU}) {
                 nodes {
                   text: label
                   parentId
@@ -21,8 +22,16 @@ export async function navQuery() {
             `
     })
   });
-  const { data } = await response.json();
-  const menuItems = Object.values(data)[0].nodes.filter(node => node.parentId === null);
+  const json = await response.json();
+  console.log('API Response:', json);
+  const { data } = json;
+  console.log('Menu Data:', data);
+  if (!data || !data.menuItems || !Array.isArray(data.menuItems.nodes)) {
+    console.error('Menu data is missing or malformed:', data);
+    return [];
+  }
+  const menuItems = data.menuItems.nodes.filter(node => node.parentId === null);
+  console.log('Filtered Menu Items:', menuItems);
   return menuItems;
 }
 

@@ -1,11 +1,46 @@
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { HTMLAttributes } from 'astro/types';
+import type { MetaData } from './types/metadata';
+import type { 
+  CallToAction,
+  ItemGrid,
+  Collapse,
+  Form,
+  Image,
+  Video,
+  Testimonial,
+  Timeline,
+  Team,
+  Stats,
+  Hero,
+  Features,
+  Features2,
+  Features3,
+  Content,
+  Steps,
+  Steps2,
+  Social,
+  Faq,
+  Cta,
+  Pricing,
+  Testimonials,
+  Comparison,
+  SocialProof,
+  Contact
+} from './types/ui';
+import type {
+  Post,
+  BlogConfig,
+  BlogData,
+  BlogCategory,
+  BlogTag
+} from './types/blog';
 
 export interface Post {
   /** A unique ID number that identifies a post. */
   id: string;
 
-  /** A post’s unique slug – part of the post’s URL based on its name, i.e. a post called “My Sample Page” has a slug “my-sample-page”. */
+  /** A post's unique slug – part of the post's URL based on its name, i.e. a post called "My Sample Page" has a slug "my-sample-page". */
   slug: string;
 
   /**  */
@@ -48,20 +83,6 @@ export interface Post {
   readingTime?: number;
 }
 
-export interface MetaData {
-  title?: string;
-  ignoreTitleTemplate?: boolean;
-
-  canonical?: string;
-
-  robots?: MetaDataRobots;
-
-  description?: string;
-
-  openGraph?: MetaDataOpenGraph;
-  twitter?: MetaDataTwitter;
-}
-
 export interface MetaDataRobots {
   index?: boolean;
   follow?: boolean;
@@ -85,17 +106,6 @@ export interface MetaDataTwitter {
   handle?: string;
   site?: string;
   cardType?: string;
-}
-
-export interface Image {
-  src: string;
-  alt?: string;
-  href?: string;
-}
-
-export interface Video {
-  src: string;
-  type?: string;
 }
 
 export interface Widget {
@@ -151,14 +161,6 @@ export interface Price {
   callToAction?: CallToAction;
   hasRibbon?: boolean;
   ribbonTitle?: string;
-}
-
-export interface Testimonial {
-  title?: string;
-  testimonial?: string;
-  name?: string;
-  job?: string;
-  image?: string | unknown;
 }
 
 export interface Input {
@@ -284,3 +286,37 @@ export interface Content extends Headline, Widget {
 }
 
 export interface Contact extends Headline, Form, Widget {}
+
+export type {
+  MetaData,
+  CallToAction,
+  ItemGrid,
+  Collapse,
+  Form,
+  Image,
+  Video,
+  Testimonial,
+  Timeline,
+  Team,
+  Stats,
+  Hero,
+  Features,
+  Features2,
+  Features3,
+  Content,
+  Steps,
+  Steps2,
+  Social,
+  Faq,
+  Cta,
+  Pricing,
+  Testimonials,
+  Comparison,
+  SocialProof,
+  Contact,
+  Post,
+  BlogConfig,
+  BlogData,
+  BlogCategory,
+  BlogTag
+};

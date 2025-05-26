@@ -36,20 +36,21 @@ const posts = APP_BLOG.isEnabled ? await findLatestPosts({ count }) : [];
 {
   APP_BLOG.isEnabled ? (
     <WidgetWrapper id={id} isDark={isDark} containerClass={classes?.container} bg={bg}>
-      <div class="flex flex-col lg:justify-between lg:flex-row mb-8">
+      <div class="mb-12 text-center flex flex-col items-center justify-center w-full">
         {title && (
-          <div class="md:max-w-sm">
+          <>
             <h2
-              class="text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none group font-heading mb-2"
+              class="text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none group font-heading mb-2 text-center"
               set:html={title}
             />
             {APP_BLOG.list.isEnabled && linkText && linkUrl && (
-              <Button variant="link" href={linkUrl}> {linkText} »</Button>
+              <div class="my-2">
+                <Button variant="link" href={linkUrl} class="text-lg font-semibold">{linkText} »</Button>
+              </div>
             )}
-          </div>
+          </>
         )}
-
-        {information && <p class="text-muted dark:text-slate-400 lg:text-sm lg:max-w-md" set:html={information} />}
+        {information && <p class="text-muted dark:text-slate-400 text-xl max-w-2xl mx-auto mt-4 mb-0 leading-relaxed text-center" set:html={information} />}
       </div>
 
       <Grid posts={posts} />

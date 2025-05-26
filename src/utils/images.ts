@@ -2,20 +2,28 @@ import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import type { OpenGraph } from '@astrolib/seo';
 
-const load = async function () {
-  let images: Record<string, () => Promise<unknown>> | undefined = undefined;
+interface ImageModule {
+  default: ImageMetadata;
+}
+
+interface ImageRecord {
+  [key: string]: () => Promise<ImageModule>;
+}
+
+const load = async function (): Promise<ImageRecord | undefined> {
+  let images: ImageRecord | undefined = undefined;
   try {
-    images = import.meta.glob('~/assets/images/**/*.{jpeg,jpg,png,tiff,webp,gif,svg,JPEG,JPG,PNG,TIFF,WEBP,GIF,SVG}');
+    images = import.meta.glob<ImageModule>('~/assets/images/**/*.{jpeg,jpg,png,tiff,webp,gif,svg,JPEG,JPG,PNG,TIFF,WEBP,GIF,SVG}');
   } catch (e) {
     // continue regardless of error
   }
   return images;
 };
 
-let _images: Record<string, () => Promise<unknown>> | undefined = undefined;
+let _images: ImageRecord | undefined = undefined;
 
 /** */
-export const fetchLocalImages = async () => {
+export const fetchLocalImages = async (): Promise<ImageRecord | undefined> => {
   _images = _images || (await load());
   return _images;
 };
@@ -43,9 +51,15 @@ export const findImage = async (
   const key = imagePath.replace('~/', '/src/');
 
   return images && typeof images[key] === 'function'
-    ? ((await images[key]()) as { default: ImageMetadata })['default']
+    ? ((await images[key]()) as ImageModule).default
     : null;
 };
+
+interface OpenGraphImage {
+  url: string;
+  width?: number;
+  height?: number;
+}
 
 /** */
 export const adaptOpenGraphImages = async (
@@ -61,7 +75,7 @@ export const adaptOpenGraphImages = async (
   const defaultHeight = 626;
 
   const adaptedImages = await Promise.all(
-    images.map(async (image) => {
+    images.map(async (image): Promise<OpenGraphImage> => {
       if (image?.url) {
         const resolvedImage = (await findImage(image.url)) as ImageMetadata | undefined;
         if (!resolvedImage) {
@@ -73,15 +87,17 @@ export const adaptOpenGraphImages = async (
         const _image = await getImage({
           src: resolvedImage,
           alt: 'Placeholder alt',
-          width: image?.width || defaultWidth,
-          height: image?.height || defaultHeight,
+          width: image.width || defaultWidth,
+          height: image.height || defaultHeight,
         });
 
         if (typeof _image === 'object') {
+          const width = 'width' in _image && typeof _image.width === 'number' ? _image.width : undefined;
+          const height = 'height' in _image && typeof _image.height === 'number' ? _image.height : undefined;
           return {
             url: typeof _image.src === 'string' ? String(new URL(_image.src, astroSite)) : 'pepe',
-            width: typeof _image.width === 'number' ? _image.width : undefined,
-            height: typeof _image.height === 'number' ? _image.height : undefined,
+            width,
+            height,
           };
         }
         return {
