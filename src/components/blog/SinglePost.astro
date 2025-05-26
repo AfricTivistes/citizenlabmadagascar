@@ -6,7 +6,6 @@ import { findImage } from '~/utils/images';
 import PostTags from '~/components/blog/Tags.astro';
 import SocialShare from '~/components/common/SocialShare.astro';
 
-import { getPermalink } from '~/utils/permalinks';
 import { getFormattedDate } from '~/utils/utils';
 
 import type { Post } from '~/types';
@@ -16,9 +15,19 @@ export interface Props {
 }
 
 const { post } = Astro.props;
-const datePost = Date.parse(post.date);
+const datePost = new Date(post.date);
 const currentPath = Astro.url.href;
-const image = await findImage(post.featuredImage?.node?.sourceUrl);
+let image: string | undefined = post.image;
+const featuredNode = (post.featuredImage && typeof post.featuredImage === 'object' && 'node' in post.featuredImage)
+  ? (post.featuredImage as any).node : undefined;
+if (!image && featuredNode && typeof featuredNode === 'object' && 'sourceUrl' in featuredNode && featuredNode.sourceUrl) {
+  const found = await findImage(featuredNode.sourceUrl);
+  if (typeof found === 'string') {
+    image = found;
+  } else if (found && typeof found === 'object' && 'src' in found) {
+    image = found.src;
+  }
+}
 ---
 
 <section class="py-8 sm:py-16 lg:py-20 mx-auto">
@@ -30,10 +39,11 @@ const image = await findImage(post.featuredImage?.node?.sourceUrl);
           <time datetime={String(post.date)}>{getFormattedDate(datePost)}</time>
             {' '}
                 ·{' '}
-          { post.categories?.nodes.map(category => {
-                    return (
-                      <a class='capitalize hover:underline' href={category.permalink}> {category.name}</a>)
-                })}
+          {Array.isArray((post as any)?.categories?.nodes)
+            ? (post as any).categories.nodes.map((category: any) => (
+                <a class='capitalize hover:underline' href={category.permalink}> {category.name}</a>
+              ))
+            : null}
           {post.readingTime && <> · {post.readingTime} min read</>}
         </p>
       </div>
@@ -80,7 +90,9 @@ const image = await findImage(post.featuredImage?.node?.sourceUrl);
       }
     </div>
     <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row">
-      <PostTags tags={post.terms?.nodes.map(tag => tag.slug)} class="mr-5" />
+      {Array.isArray((post as any)?.terms?.nodes) && (
+        <PostTags tags={(post as any).terms.nodes.map((tag: any) => tag.slug)} class="mr-5" />
+      )}
       <SocialShare url={currentPath} text={post.title} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" />
     </div>
   </article>
