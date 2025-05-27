@@ -6,8 +6,13 @@ const { inputs, textarea, disclaimer, button = 'Envoyer', description = '' } = A
 ---
 
 <form 
+  name="contact"
   data-netlify-recaptcha="true"
-  data-netlify="true">
+  data-netlify="true"
+  method="POST"
+  action="/contact"
+  >
+  <input type="hidden" name="form-name" value="contact" />
   {
     inputs &&
       inputs.map(
@@ -40,7 +45,7 @@ const { inputs, textarea, disclaimer, button = 'Envoyer', description = '' } = A
         </label>
         <textarea
           id="textarea"
-          name="textarea"
+          name="message"
           rows={textarea.rows ? textarea.rows : 4}
           placeholder={textarea.placeholder}
           class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
