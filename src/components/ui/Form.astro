@@ -91,3 +91,28 @@ const { inputs, textarea, disclaimer, button = 'Envoyer', description = '' } = A
     )
   }
 </form>
+
+<script is:inline>
+  const form = document.currentScript.previousElementSibling;
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const action = form.getAttribute('action') || window.location.pathname;
+      const response = await fetch(action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/x-www-form-urlencoded' },
+      });
+      if (response.ok) {
+        form.style.display = 'none';
+        const success = document.createElement('div');
+        success.className = 'mt-6 text-green-600 text-center';
+        success.textContent = 'Merci, votre message a bien été envoyé !';
+        form.parentNode.insertBefore(success, form.nextSibling);
+      } else {
+        alert('Une erreur est survenue. Veuillez réessayer.');
+      }
+    });
+  }
+</script>
